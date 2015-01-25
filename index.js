@@ -14,6 +14,7 @@ var foreach  = require('lodash.foreach');
 *   uppercase
 *   extract
 *   extract_basename
+*   details
 */
 module.exports = function(options) {
   options = defaults(options || {}, {
@@ -21,7 +22,8 @@ module.exports = function(options) {
     screenshot_ext: 'png',
     uppercase: true,
     extract: {},
-    extract_basename: '{basename}_{section}'
+    extract_basename: '{basename}_{section}',
+    details: true
   });
 
   return through2.obj(function(file, enc, cb) {
@@ -40,14 +42,15 @@ module.exports = function(options) {
     basename = ( options.uppercase ? basename.toUpperCase() : basename );
 
     // Handle titles.
-    // from https://github.com/benbalter/WP-Readme-to-Github-Markdown
+    // From https://github.com/benbalter/WP-Readme-to-Github-Markdown
     str = str.replace(/^=([^=]+)=*?[\\s ]*?$/gim, "###$1###");
     str = str.replace(/^==([^=]+)==*?[\\s ]*?$/mig, "##$1##");
     str = str.replace(/^===([^=]+)===*?[\\s ]*?$/gim, "#$1#");
 
-    // Highlight detail listings.
+    // Handle detail listings.
+    var details_pattern = options.details ? '**$1:** $2\n' : '';
     var d_match = str.match(/^([^#]+)##/mg);
-    var details = d_match[0].replace(/^([^:\r\n]+):(.+)$/gim, "**$1:** $2  ");
+    var details = d_match[0].replace(/^([^:\r\n]+):\s*(.+)\n|\r/gim, details_pattern);
     str = str.replace(d_match[0], details);
 
     // Get plugin name.
@@ -69,7 +72,7 @@ module.exports = function(options) {
       var screenshots_list = screenshots.match(/^\d+\. (.*)/gim);
 
       // Replace list items with markdown image syntax, hotlinking to plugin repo.
-      for(i = 0; i < screenshots_list.length; i++) {
+      for (var i = 0; i < screenshots_list.length; i++) {
         var url = options.screenshot_url;
         url = url.replace('{plugin}', plugin);
         url = url.replace('{screenshot}', 'screenshot-'+(1+i));
@@ -104,7 +107,7 @@ module.exports = function(options) {
       var section_match = str.match(pattern);
       if (section_match) {
         // Upgrade headlines by one level and add trailing empty line.
-        var section_content = section_match[0].replace(/##/g, '#').trim() + '\n';
+        var section_content = section_match[0].replace(/^(#+)(?:#([^#]*)#)#*$/mig, '$1$2$1').trim() + '\n';
 
         // Create new file.
         var section_file = new gutil.File({
@@ -116,7 +119,7 @@ module.exports = function(options) {
         this.push(section_file);
 
         // Remove from the source.
-        str.replace(section_match[0], '');
+        str = str.replace(section_match[0], '');
       }
     }, this);
 

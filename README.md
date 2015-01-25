@@ -9,6 +9,7 @@ In your `gulpfile.js` specify a task like the following:
     gulp.task('readme', function() {
       gulp.src([ 'readme.txt' ])
       .pipe(readme({
+        details: false,
         screenshot_ext: ['jpg', 'jpg', 'png'],
         extract: {
           'changelog': 'CHANGELOG',
@@ -27,3 +28,4 @@ The result of this task can be seen in the [Featured Video Plus repo](/ahoereth/
 * `uppercase` *boolean*: Specifies if the filenames should be converted to uppercase when translated to `.md`. Default: `true`
 * `extract` *array/object*: Section names or object of `section name: file basename` pairs. Results in the specified sections being extracted into their individual file. By default no sections are extracted. You can use `{basename}` and `{section}` in the object's values which will be replaced by the source file's basename / the section name. Spaces in section name are converted to underscores. The `uppercase` option also applies for extracted file basenames.
 * `extract_basename` *string*: The default basename for extracted files. Only used if an array and not an object is specified in the `extract` option. Default: `{basename}_{section}`
+* `details` *boolean*: If the details listing at the top of the readme file should be copied over. Default: `true`

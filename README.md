@@ -1,6 +1,6 @@
 # gulp-readme-to-markdown #
 Converts [WordPress.org readme.txt](https://wordpress.org/plugins/about/readme.txt) style files to [GitHub flavored markdown](https://help.github.com/articles/github-flavored-markdown/).
-A simillar task is available for grunt by [stephenharris](/stephenharris/wp-readme-to-markdown).
+A simillar task is available for grunt by [stephenharris](https://github.com/stephenharris/wp-readme-to-markdown).
 
 
 ## Usage ##
@@ -19,7 +19,7 @@ In your `gulpfile.js` specify a task like the following:
       .pipe(gulp.dest('.'));
     });
 
-The result of this task can be seen in the [Featured Video Plus repo](/ahoereth/featured-video-plus).
+The result of this task can be seen in the [Featured Video Plus repo](https://github.com/ahoereth/featured-video-plus).
 
 
 ## Options ##

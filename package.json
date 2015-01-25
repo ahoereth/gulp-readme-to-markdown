@@ -1,0 +1,32 @@
+{
+  "name": "gulp-readme-to-markdown",
+  "version": "0.1.0",
+  "description": "Convert WordPress.org readme.txt style files to GitHub flavored markdown.",
+  "main": "index.js",
+  "author": {
+    "name": "Alexander Hoereth",
+    "email": "a.hoereth@gmail.com"
+  },
+  "homepage": "https://github.com/ahoereth/gulp-readme-to-markdown",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ahoereth/gulp-readme-to-markdown.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ahoereth/gulp-readme-to-markdown/issues"
+  },
+  "keywords": [
+    "gulp",
+    "gulpplugin",
+    "readme",
+    "markdown"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "path": "0.11.x",
+    "through2": "0.6.x",
+    "gulp-util": "3.0.x",
+    "lodash.foreach": "2.4.x",
+    "lodash.defaults": "2.4.x"
+  }
+}

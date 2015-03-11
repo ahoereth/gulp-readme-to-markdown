@@ -4,8 +4,13 @@ A simillar task is available for grunt by [stephenharris](https://github.com/ste
 
 
 ## Usage ##
+
+    npm install gulp-readme-to-markdown
+
+
 In your `gulpfile.js` specify a task like the following:
 
+    var readme = require('gulp-readme-to-markdown');
     gulp.task('readme', function() {
       gulp.src([ 'readme.txt' ])
       .pipe(readme({

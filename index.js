@@ -54,8 +54,7 @@ module.exports = function(options) {
     str = str.replace(d_match[0], details);
     
     // Handle code snippets, so multiline snippets are treated nicely in GH
-    var gh_code_pattern = '```';
-    str =  str.replace(/`/g, gh_code_pattern);
+    str =  str.replace(/^`\n/gm, '```\n');
 
     // Get plugin name.
     var n_match = str.match(/^#([^#]+)#[\\s ]*?$/im);

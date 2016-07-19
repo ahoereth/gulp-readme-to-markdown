@@ -21,7 +21,9 @@ module.exports = function(options) {
     screenshot_url: 'https://ps.w.org/{plugin}/assets/{screenshot}.{ext}',
     screenshot_ext: 'png',
     uppercase: true,
-    extract: {},
+    extract: {
+      "Screenshots": null
+    },
     extract_basename: '{basename}_{section}',
     details: true
   });
@@ -59,32 +61,6 @@ module.exports = function(options) {
     n_match[1].trim().toLowerCase().replace(/ /g, '-') :
     path.basename(path.dirname(file.path));
     pluginname = options.pluginname || pluginname;
-
-    // Parse screenshots.
-    var s_match = str.match(/## Screenshots ##([^#]*)/im);
-    if (s_match && s_match.length > 1) {
-      var plugin = n_match[1].trim().toLowerCase().replace(/ /g, '-');
-
-      // Collect screenshots content.
-      var screenshots = s_match[1];
-
-      // Parse screenshot list into array.
-      var screenshots_list = screenshots.match(/^\d+\. (.*)/gim);
-
-      // Replace list items with markdown image syntax, hotlinking to plugin repo.
-      for (var i = 0; i < screenshots_list.length; i++) {
-        var url = options.screenshot_url;
-        url = url.replace('{plugin}', plugin);
-        url = url.replace('{screenshot}', 'screenshot-'+(1+i));
-        url = url.replace('{ext}', typeof options.screenshot_ext !== 'string' ?
-        options.screenshot_ext[i] :
-        options.screenshot_ext);
-        str = str.replace(
-          screenshots_list[i],
-          screenshots_list[i] + "\n![" + screenshots_list[i] + "](" + url + ")\n"
-        );
-      }
-    }
 
     // Extract sections into individual files.
     foreach (options.extract, function(val, key) {

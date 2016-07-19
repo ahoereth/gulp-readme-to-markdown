@@ -20,10 +20,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "path": "0.11.x",
-    "through2": "0.6.x",
+    "path": "0.12.x",
+    "through2": "2.0.x",
     "gulp-util": "3.0.x",
-    "lodash.foreach": "2.4.x",
-    "lodash.defaults": "2.4.x"
+    "lodash.foreach": "4.3.x",
+    "lodash.defaults": "4.0.x"
   }
 }

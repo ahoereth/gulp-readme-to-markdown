@@ -91,14 +91,16 @@ module.exports = function(options) {
       // options.extract is either an array of section titles or
       // an object of section title: extract file basenames
       var title = typeof key === 'number' ? val : key;
-      var section_basename = typeof key === 'number' ? options.extract_basename : val;
-      section_basename = section_basename
-      .replace('{basename}', basename)
-      .replace('{section}', title.replace(' ', '_'));
+      var section_basename = typeof key === 'number' ? options.extract_basename
+                                                     : val;
+      var justremove = section_basename === null; // Remove or actually extract?
+      section_basename = (section_basename || '')
+        .replace('{basename}', basename)
+        .replace('{section}', title.replace(' ', '_'));
 
       // Uppercase section basename if required.
-      section_basename = options.uppercase ?
-      section_basename.toUpperCase() : section_basename;
+      section_basename = options.uppercase ? section_basename.toUpperCase()
+                                           : section_basename;
 
       // Section match pattern. Props @swenzel
       var pattern = new RegExp('^##\\s*'+title+'\\s*##$((?:.*\n?(?!^##[^#]*##$))*)', 'im');
@@ -106,17 +108,19 @@ module.exports = function(options) {
       // Find section.
       var section_match = str.match(pattern);
       if (section_match) {
-        // Upgrade headlines by one level and add trailing empty line.
-        var section_content = section_match[0].replace(/^(#+)(?:#([^#]*)#)#*$/mig, '$1$2$1').trim() + '\n';
+        if (!justremove) { // Remove or actually extract?
+          // Upgrade headlines by one level and add trailing empty line.
+          var section_content = section_match[0].replace(/^(#+)(?:#([^#]*)#)#*$/mig, '$1$2$1').trim() + '\n';
 
-        // Create new file.
-        var section_file = new gutil.File({
-          base: path.basename(file.path),
-          cwd: path.basename(file.path),
-          path: path.join(path.basename(file.path), section_basename + '.md'),
-          contents: new Buffer(section_content)
-        });
-        this.push(section_file);
+          // Create new file.
+          var section_file = new gutil.File({
+            base: path.basename(file.path),
+            cwd: path.basename(file.path),
+            path: path.join(path.basename(file.path), section_basename + '.md'),
+            contents: new Buffer(section_content)
+          });
+          this.push(section_file);
+        }
 
         // Remove from the source.
         str = str.replace(section_match[0], '');

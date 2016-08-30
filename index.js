@@ -66,6 +66,7 @@ module.exports = function(options) {
     pluginname = options.pluginname || pluginname;
 
     // Extract sections into individual files.
+    var self = this;
     foreach (options.extract, function(val, key) {
       // options.extract is either an array of section titles or
       // an object of section title: extract file basenames
@@ -98,13 +99,13 @@ module.exports = function(options) {
             path: path.join(path.basename(file.path), section_basename + '.md'),
             contents: new Buffer(section_content)
           });
-          this.push(section_file);
+          self.push(section_file);
         }
 
         // Remove from the source.
         str = str.replace(section_match[0], '');
       }
-    }, this);
+    });
 
     file.contents = new Buffer(str);
 

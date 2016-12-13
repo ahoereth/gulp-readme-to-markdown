@@ -1,6 +1,6 @@
 {
   "name": "gulp-readme-to-markdown",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Convert WordPress.org readme.txt style files to GitHub flavored markdown.",
   "main": "index.js",
   "author": "Alexander Hoereth <a.hoereth@gmail.com>",
@@ -23,7 +23,7 @@
     "path": "0.12.x",
     "through2": "2.0.x",
     "gulp-util": "3.0.x",
-    "lodash.foreach": "4.3.x",
-    "lodash.defaults": "4.0.x"
+    "lodash.foreach": "4.5.x",
+    "lodash.defaults": "4.2.x"
   }
 }

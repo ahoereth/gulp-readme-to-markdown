@@ -54,7 +54,7 @@ module.exports = function(options) {
     var d_match = str.match(/^([^#]+)##/mg);
     var details = d_match[0].replace(/^([^:\r\n]+):\s*(.+)\n|\r/gim, details_pattern);
     str = str.replace(d_match[0], details);
-    
+
     // Handle code snippets, so multiline snippets are treated nicely in GH
     str =  str.replace(/^`\n/gm, '```\n');
 
